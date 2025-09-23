@@ -5,6 +5,7 @@ import com.todosystem.dto.TaskResponse;
 import com.todosystem.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,10 +30,14 @@ public class TaskController {
     public List<TaskResponse> all() {
         return service.all();
     }
-
+    
     @GetMapping("/{id}")
-    public TaskResponse getById(@PathVariable UUID id) {
-        return service.getById(id);
+    public ResponseEntity<TaskResponse> getById(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(service.getById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PatchMapping("/{id}/status")
