@@ -30,7 +30,7 @@ public class TaskController {
     public List<TaskResponse> all() {
         return service.all();
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getById(@PathVariable UUID id) {
         try {
